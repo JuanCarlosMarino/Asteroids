@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
     public void Lose () {
         rb.velocity = Vector3.zero;
         transform.position = Vector3.zero;
+        SceneManager.LoadScene(0);
     }
     private void Rotate()
     {
