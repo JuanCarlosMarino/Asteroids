@@ -8,6 +8,8 @@
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
           <e p="Asteroid.cs" t="Include" />
+          <e p="AsteroidSpawner.cs" t="Include" />
+          <e p="Bullet.cs" t="Include" />
           <e p="InputManager.cs" t="Include" />
           <e p="Player.cs" t="Include" />
           <e p="Toroidal.cs" t="Include" />

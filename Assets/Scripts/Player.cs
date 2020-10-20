@@ -12,13 +12,20 @@ public class Player : MonoBehaviour
 
     public float angularSpeed;
 
+    public float shootRate = 0.5f;
+
+    public float offsetBullet;
+
+    public GameObject bulletPrefab;
+
+    public Transform bulletSpawner;
+
     private Rigidbody2D rb;
 
     private float vertical;
-
     private float horizontal;
-
     private bool shooting;
+    private bool canShoot = true;
 
     void Start()
     {
@@ -34,6 +41,7 @@ public class Player : MonoBehaviour
         shooting = InputManager.Fire;
 
         Rotate();
+        Shoot();
     }
 
     private void FixedUpdate()
@@ -45,7 +53,10 @@ public class Player : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
     }
-
+    public void Lose () {
+        rb.velocity = Vector3.zero;
+        transform.position = Vector3.zero;
+    }
     private void Rotate()
     {
         if (horizontal == 0)
@@ -53,5 +64,24 @@ public class Player : MonoBehaviour
             return;
         }
         transform.Rotate(0,0,-angularSpeed *horizontal *Time.deltaTime);
+    }
+    private void Shoot () {
+        if (shooting && canShoot)
+        {
+            StartCoroutine(FireRate());
+
+        }
+    }
+    private IEnumerator FireRate () {
+        canShoot = false;
+        var pos = transform.up * offsetBullet + transform.position;
+        var bullet = Instantiate (
+            bulletPrefab,
+            pos,
+            transform.rotation
+        );
+        Destroy (bullet, 5);
+        yield return new WaitForSeconds (shootRate);
+        canShoot = true;
     }
 }
